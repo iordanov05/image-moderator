@@ -17,8 +17,6 @@ repos:
     hooks:
       - id: pytest
         name: pytest
-        language: python          
-        entry: pytest -q         
-        additional_dependencies: 
-          - pytest==8.4.1
-        pass_filenames: false     
+        language: system         
+        entry: .venv/bin/python -m pytest -q
+        pass_filenames: false  
