@@ -14,6 +14,9 @@ lint:
 format:          
 	ruff format .
 
+fix:          
+	ruff check --fix .
+
 type:              
 	mypy app
 
