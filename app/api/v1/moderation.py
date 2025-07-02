@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, UploadFile, status
+from fastapi import APIRouter, File, HTTPException, UploadFile, status
 
 from app.core.config import get_settings
 from app.models.moderation import ModerateResponse
@@ -14,9 +14,13 @@ ALLOWED_MIME = {"image/jpeg", "image/png"}
 _settings = get_settings()
 _client = DeepAIClient()
 
+FILE_UPLOAD = File(..., description="JPG or PNG image to check")
+
 
 @router.post("/", response_model=ModerateResponse)
-async def moderate(file: UploadFile) -> ModerateResponse:
+async def moderate(
+    file: UploadFile = FILE_UPLOAD,
+) -> ModerateResponse:
     """Отправляет изображение в DeepAI и решает, пропускать ли его."""
     if file.content_type not in ALLOWED_MIME:
         raise HTTPException(
